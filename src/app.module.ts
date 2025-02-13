@@ -1,23 +1,22 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { BusinessModule } from './business/business.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { CustomerModule } from './customer/customer.module';
 import { CampaingModule } from './campaing/campaing.module';
 import { AppointmentModule } from './appointment/appointment.module';
-import { DatabaseModule } from './database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/user.entity';
 
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: 'postgresql://neondb_owner:npg_YXVd50txwkcK@ep-ancient-pine-a887ez10-pooler.eastus2.azure.neon.tech/appointments?sslmode=require',
+      url: process.env.DATABASE_URL,
       entities: [__dirname + '/**/*.entity.{ts,js}'],
       synchronize: true, // ⚠️ ¡No usar en producción!
       ssl: process.env.DATABASE_SSL === 'true' ? { rejectUnauthorized: false } : false,
