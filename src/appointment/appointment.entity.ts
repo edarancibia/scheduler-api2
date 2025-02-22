@@ -5,25 +5,25 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  JoinColumn,
+  RelationId,
 } from 'typeorm';
 import { Business } from '../business/business.entity';
 import { Customer } from '../customer/customer.entity';
+import Status from '../status/status.entity';
 
-export enum AppointmentStatus {
-  SCHEDULED = 'Scheduled',
-  COMPLETED = 'Completed',
-  CANCELLED = 'Cancelled',
-}
 
 @Entity({ name: 'appointments' })
 export class Appointment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Business, (business) => business.appointments, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => Business, { nullable: false, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'business_id' })
   business: Business;
 
-  @ManyToOne(() => Customer, (customer) => customer.appointments, { nullable: false, onDelete: 'CASCADE' })
+  @ManyToOne(() => Customer, (customer) => customer.appointments, {nullable: false, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
@@ -32,12 +32,13 @@ export class Appointment {
   @Column({ type: 'timestamp', nullable: false })
   date: Date;
 
-  @Column({ type: 'enum', enum: AppointmentStatus, default: AppointmentStatus.SCHEDULED })
-  status: AppointmentStatus;
+  @ManyToOne(() => Status)
+  @JoinColumn({ name: 'status_id' })
+  status: Status;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at'})
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at'})
   updatedAt: Date;
 }

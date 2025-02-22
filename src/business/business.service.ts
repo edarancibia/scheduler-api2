@@ -12,7 +12,6 @@ export default class BusinessService {
     ) {}
 
     async create(createBusinessDto: CreateBusinessDto): Promise<Business> {
-        console.log(createBusinessDto)
         try {
             const newBusiness = this.businessRepository.create(createBusinessDto);
             const createdBusiness = await this.businessRepository.save(newBusiness);
