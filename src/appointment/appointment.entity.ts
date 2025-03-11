@@ -5,8 +5,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinColumn,
-  RelationId,
+  JoinColumn
 } from 'typeorm';
 import { Business } from '../business/business.entity';
 import { Customer } from '../customer/customer.entity';
@@ -31,6 +30,9 @@ export class Appointment {
 
   @Column({ type: 'timestamp', nullable: false })
   date: Date;
+
+  @Column({ type: 'timestamp', nullable: false })
+  dateEnd: Date;
 
   @ManyToOne(() => Status)
   @JoinColumn({ name: 'status_id' })

@@ -1,5 +1,4 @@
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
-import Status from "../status/status.entity";
 
 export default class CreateAppointmenDto {
     @IsNotEmpty()
@@ -13,6 +12,10 @@ export default class CreateAppointmenDto {
     @IsNotEmpty()
     @IsString()
     date: string;
+
+    @IsNotEmpty()
+    @IsString()
+    dateEnd: string;
     
     @IsNotEmpty()
     @IsString()

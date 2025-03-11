@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import AppointmentService from './appointment.service';
 import CreateAppointmenDto from './createAppointment.dto';
 import { Appointment } from './appointment.entity';
 import UpdateAppointmentDto from './updateAppointment.dto';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('appointments')
 export default class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}

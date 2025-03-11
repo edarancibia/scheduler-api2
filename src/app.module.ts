@@ -10,6 +10,7 @@ import { CampaingModule } from './campaing/campaing.module';
 import { AppointmentModule } from './appointment/appointment.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { StatusModule } from './status/status.module';
+import { BusinessServiceModule } from './business-service/business-service.module';
 
 
 @Module({
@@ -30,6 +31,7 @@ import { StatusModule } from './status/status.module';
     CampaingModule,
     AuthModule,
     StatusModule,
+    BusinessServiceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

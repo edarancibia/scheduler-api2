@@ -21,7 +21,7 @@ export default class AppointmentService {
     ) {}
 
     async create(createAppointmetDto: CreateAppointmenDto): Promise<Appointment> {
-        const { businessId, customerId, date, service, statusId } = createAppointmetDto;
+        const { businessId, customerId, date, dateEnd, service, statusId } = createAppointmetDto;
 
         const business = await this.businessRepository.findOne({ where: { id: businessId } });
         const customer = await this.customerRepository.findOne({ where: { id: customerId } });
@@ -32,6 +32,7 @@ export default class AppointmentService {
         appointment.business = business;
         appointment.customer = customer;
         appointment.date = new Date(date);
+        appointment.dateEnd = new Date(dateEnd);
         appointment.service = service;
         appointment.status = status;
 

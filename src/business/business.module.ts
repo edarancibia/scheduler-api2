@@ -6,7 +6,7 @@ import BusinessController from './business.controller';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Business])],
-    providers: [BusinessService],
+    providers: [BusinessService, BusinessService],
     controllers: [BusinessController],
   })
 export class BusinessModule {}

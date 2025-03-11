@@ -10,7 +10,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
+import Service from '../business-service/businessService.entity';
 
 @Entity({ name: 'business' })
 export class Business {
@@ -37,6 +37,9 @@ export class Business {
 
   @OneToMany(() => Appointment, (appointment) => appointment.business)
   appointments: Appointment[];
+
+  @OneToMany(() => Service, (service) => service.business, { cascade: true })
+  services: Service[];
 
   @CreateDateColumn()
   createdAt: Date;
