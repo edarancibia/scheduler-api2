@@ -21,4 +21,8 @@ export default class CreateUserDto {
     @IsNotEmpty()
     @IsNumber()
     role: number;
+
+    @IsNotEmpty()
+    @IsString()
+    phone: string;
 }

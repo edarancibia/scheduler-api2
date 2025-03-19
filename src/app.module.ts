@@ -11,6 +11,8 @@ import { AppointmentModule } from './appointment/appointment.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { StatusModule } from './status/status.module';
 import { BusinessServiceModule } from './business-service/business-service.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { MailModule } from './mail/mail.module';
 
 
 @Module({
@@ -32,6 +34,8 @@ import { BusinessServiceModule } from './business-service/business-service.modul
     AuthModule,
     StatusModule,
     BusinessServiceModule,
+    ScheduleModule.forRoot(),
+    MailModule
   ],
   controllers: [AppController],
   providers: [AppService],

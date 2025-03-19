@@ -11,6 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import Service from '../business-service/businessService.entity';
+import UserInvitation from '../user/userInvitation.entity';
 
 @Entity({ name: 'business' })
 export class Business {
@@ -38,8 +39,11 @@ export class Business {
   @OneToMany(() => Appointment, (appointment) => appointment.business)
   appointments: Appointment[];
 
-  @OneToMany(() => Service, (service) => service.business, { cascade: true })
+  @OneToMany(() => Service, (service) => service.business, { cascade: true }) 
   services: Service[];
+
+  @OneToMany(() => UserInvitation, (invitation) =>invitation.businessId, { cascade: true })
+  invitation: UserInvitation
 
   @CreateDateColumn()
   createdAt: Date;

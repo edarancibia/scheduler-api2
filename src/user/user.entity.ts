@@ -8,9 +8,10 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  OneToMany,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-
+import UserInvitation from './userInvitation.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -32,8 +33,19 @@ export class User {
   @Column()
   role: number;
 
-  @ManyToOne(() => Business, (business) => business.users, { nullable: true, onDelete: 'SET NULL' })
+  @Column()
+  phone: string;
+
+  @ManyToOne(() => Business, (business) => business.users, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
   business: Business;
+
+  @OneToMany(() => UserInvitation, (invitation) => invitation.userId, {
+    cascade: true,
+  })
+  invitation: UserInvitation;
 
   @CreateDateColumn()
   createdAt: Date;
