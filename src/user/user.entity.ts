@@ -9,6 +9,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import UserInvitation from './userInvitation.entity';
@@ -36,10 +37,11 @@ export class User {
   @Column()
   phone: string;
 
-  @ManyToOne(() => Business, (business) => business.users, {
+  @ManyToOne(() => Business, (business) => business.users, { 
     nullable: true,
-    onDelete: 'SET NULL',
+    onDelete: 'CASCADE'
   })
+  @JoinColumn({ name: 'businessId' }) 
   business: Business;
 
   @OneToMany(() => UserInvitation, (invitation) => invitation.userId, {

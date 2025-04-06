@@ -27,7 +27,7 @@ export class Business {
   @Column({ type: 'varchar', length: 20, nullable: false })
   phone: string;
 
-  @OneToMany(() => User, (user) => user.business)
+  @OneToMany(() => User, (user) => user.business) 
   users: User[];
 
   @OneToMany(() => Customer, (customer) => customer.business)

@@ -9,13 +9,11 @@ export default class CreateCustomerDto {
     @IsString()
     lastname: string;
 
-    @IsNotEmpty()
     @IsString()
-    email: string;
+    email?: string;
 
-    @IsNotEmpty()
     @IsString()
-    phone: string;
+    phone?: string;
 
     @IsNotEmpty()
     @IsInt()

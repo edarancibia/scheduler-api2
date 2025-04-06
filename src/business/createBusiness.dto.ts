@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export default class CreateBusinessDto {
     @IsNotEmpty()
@@ -7,9 +7,13 @@ export default class CreateBusinessDto {
 
     @IsNotEmpty()
     @IsString()
-    adress: string;
+    address: string;
 
     @IsNotEmpty()
     @IsString()
     phone: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    userId: number;
 }

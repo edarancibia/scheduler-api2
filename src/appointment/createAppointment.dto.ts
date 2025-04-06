@@ -11,11 +11,11 @@ export default class CreateAppointmenDto {
 
     @IsNotEmpty()
     @IsString()
-    date: string;
+    date: Date;
 
     @IsNotEmpty()
     @IsString()
-    dateEnd: string;
+    dateEnd: Date;
     
     @IsNotEmpty()
     @IsString()

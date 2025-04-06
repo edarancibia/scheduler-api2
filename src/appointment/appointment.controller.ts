@@ -4,6 +4,7 @@ import CreateAppointmenDto from './createAppointment.dto';
 import { Appointment } from './appointment.entity';
 import UpdateAppointmentDto from './updateAppointment.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { AppointmentWithCustomerName } from './appointmentWithCustomer.interface';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('appointments')
@@ -25,14 +26,24 @@ export default class AppointmentController {
     return this.appointmentService.update(appointmentId, data.statusId);
   }
 
-  @Get(':businessId/:statusId')
-  async getAllbyBusinessAndStatus(
+  @Get(':businessId')
+  async getAllbyBusiness(
     @Param('businessId') businessId: number,
-    @Param('statusId') statusId: number,
-  ): Promise<Appointment[]> {
-    return await this.appointmentService.getByBusinessAndStatus(
+  ): Promise<AppointmentWithCustomerName[]> {
+    return await this.appointmentService.getByBusiness(
       businessId,
-      statusId,
+
     );
   }
+
+  // @Get(':businessId/:statusId')
+  // async getAllbyBusinessAndStatus(
+  //   @Param('businessId') businessId: number,
+  //   @Param('statusId') statusId: number,
+  // ): Promise<Appointment[]> {
+  //   return await this.appointmentService.getByBusinessAndStatus(
+  //     businessId,
+  //     statusId,
+  //   );
+  // }
 }

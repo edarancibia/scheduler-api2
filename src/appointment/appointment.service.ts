@@ -1,17 +1,20 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Appointment } from "./appointment.entity";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import CreateAppointmenDto from "./createAppointment.dto";
 import Status from "../status/status.entity";
 import { Business } from "../business/business.entity";
 import { Customer } from "../customer/customer.entity";
+import AppointmentRepository from "./appointmen.repository";
+import { AppointmentWithCustomerName } from "./appointmentWithCustomer.interface";
 
 @Injectable()
 export default class AppointmentService {
     constructor(
         @InjectRepository(Appointment)
         private readonly appointmentRepository: Repository<Appointment>,
+        private readonly repo: AppointmentRepository,
         @InjectRepository(Business)
         private readonly businessRepository: Repository<Business>,
         @InjectRepository(Customer)
@@ -53,12 +56,17 @@ export default class AppointmentService {
         return await this.appointmentRepository.save(appointment);
     }
 
-    async getByBusinessAndStatus(businessId: number, statusId: number): Promise<Appointment[]> {
-        const appointments: Appointment[] = await this.appointmentRepository.find({
-            where: { business: { id: businessId }, status: { id: statusId } },
-            relations: ['business', 'status'],
-        });
+    async getByBusiness(businessId: number): Promise<AppointmentWithCustomerName[]> {
+        const res = await this.repo.getByBusiness(businessId);
 
-        return appointments;
+        console.log(res)
+        return res;
+    }
+
+    async getByBusinessAndStatus(businessId: number): Promise<AppointmentWithCustomerName[]> {
+        const res = await this.repo.getByBusiness(businessId);
+
+        console.log(res)
+        return res;
     }
 }

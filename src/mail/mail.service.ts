@@ -9,7 +9,7 @@ export class MailService {
   async sendEmail(mail: Mail): Promise<void> {
     await this.mailerService.sendMail({
       to: mail.to,
-      from: 'e.daniel.arancibia@gmail.com',
+      from: process.env.MAIL_FROM,
       subject: mail.subject,
       text: mail.text,
       html: `<b>${mail.text}</b>`,
