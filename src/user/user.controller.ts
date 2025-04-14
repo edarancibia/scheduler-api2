@@ -26,7 +26,9 @@ export default class UserController {
   }
 
   @Get()
-  async getUserDataByEmail(@Query('email') email: string): Promise<UserUiDataInterface> {
+  async getUserDataByEmail(
+    @Query('email') email: string,
+  ): Promise<UserUiDataInterface> {
     return await this.userService.findFullDataByEmail(email);
   }
 

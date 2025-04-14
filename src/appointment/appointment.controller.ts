@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import AppointmentService from './appointment.service';
 import CreateAppointmenDto from './createAppointment.dto';
 import { Appointment } from './appointment.entity';
@@ -10,6 +18,13 @@ import { AppointmentWithCustomerName } from './appointmentWithCustomer.interface
 @Controller('appointments')
 export default class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
+
+  @Get('/:id')
+  async getbyId(
+    @Param('id') eventId: number,
+  ): Promise<AppointmentWithCustomerName> {
+    return await this.appointmentService.getById(eventId);
+  }
 
   @Post()
   async createAppointment(
@@ -26,24 +41,10 @@ export default class AppointmentController {
     return this.appointmentService.update(appointmentId, data.statusId);
   }
 
-  @Get(':businessId')
+  @Get('by-business/:businessId')
   async getAllbyBusiness(
     @Param('businessId') businessId: number,
   ): Promise<AppointmentWithCustomerName[]> {
-    return await this.appointmentService.getByBusiness(
-      businessId,
-
-    );
+    return await this.appointmentService.getByBusiness(businessId);
   }
-
-  // @Get(':businessId/:statusId')
-  // async getAllbyBusinessAndStatus(
-  //   @Param('businessId') businessId: number,
-  //   @Param('statusId') statusId: number,
-  // ): Promise<Appointment[]> {
-  //   return await this.appointmentService.getByBusinessAndStatus(
-  //     businessId,
-  //     statusId,
-  //   );
-  // }
 }

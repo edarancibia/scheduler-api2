@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsNumber } from "class-validator";
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export default class UpdateAppointmentDto {
-    @IsNotEmpty()
-    @IsNumber()
-    statusId: number;
+  @IsNotEmpty()
+  @IsNumber()
+  statusId: number;
 }

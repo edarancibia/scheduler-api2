@@ -1,27 +1,27 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export default class CreateAppointmenDto {
-    @IsNotEmpty()
-    @IsNumber()
-    businessId: number;
+  @IsNotEmpty()
+  @IsNumber()
+  businessId: number;
 
-    @IsNotEmpty()
-    @IsNumber()
-    customerId: number;
+  @IsNotEmpty()
+  @IsNumber()
+  customerId: number;
 
-    @IsNotEmpty()
-    @IsString()
-    date: Date;
+  @IsNotEmpty()
+  @IsString()
+  date: Date;
 
-    @IsNotEmpty()
-    @IsString()
-    dateEnd: Date;
-    
-    @IsNotEmpty()
-    @IsString()
-    service: string;
+  @IsNotEmpty()
+  @IsString()
+  dateEnd: Date;
 
-    @IsNotEmpty()
-    @IsNumber()
-    statusId: number;
+  @IsNotEmpty()
+  @IsString()
+  service: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  statusId: number;
 }

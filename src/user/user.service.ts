@@ -52,8 +52,6 @@ export default class UserService {
       relations: { business: true },
     });
 
-    console.log('aqui ', user);
-
     const business = await this.businessRepo.findOne({
       where: { id: user.business.id },
     });
@@ -115,7 +113,7 @@ export default class UserService {
       return;
     }
 
-    for (let invitation of pendingInvitations) {
+    for (const invitation of pendingInvitations) {
       invitation.status = 'done';
       invitation.updatedAt = new Date();
 
@@ -123,7 +121,7 @@ export default class UserService {
 
       const urlToken = await this.generateInvitationToken(invitation.id);
 
-      let mail: Mail = {
+      const mail: Mail = {
         subject: 'Invitation to join',
         to: invitation.destinationEmail,
         text: 'Te han invitado a unirte',

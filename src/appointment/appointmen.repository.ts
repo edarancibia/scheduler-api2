@@ -6,28 +6,39 @@ import { AppointmentWithCustomerName } from './appointmentWithCustomer.interface
 
 @Injectable()
 export default class AppointmentRepository extends Repository<Appointment> {
-    constructor(
-        @InjectRepository(Appointment)
-        private readonly repo: Repository<Appointment>,
-    ) {
-      super(repo.target, repo.manager, repo.queryRunner);
-    }
+  constructor(
+    @InjectRepository(Appointment)
+    private readonly repo: Repository<Appointment>,
+  ) {
+    super(repo.target, repo.manager, repo.queryRunner);
+  }
 
-  async getByBusiness(businessId: number): Promise<AppointmentWithCustomerName[]> {
+  async getByBusiness(
+    businessId: number,
+  ): Promise<AppointmentWithCustomerName[]> {
     const appointments = await this.find({
-        where: { business: { id: businessId }, status: { id: In([1, 2]) } },
-        relations: ['business', 'status', 'customer'],
-      });
-    
-      return appointments.map((appointment) => ({
-        id: appointment.id,
-        service: appointment.service,
-        date: appointment.date,
-        dateEnd: appointment.dateEnd,
-        status: appointment.status,
-        business: appointment.business,
-        customer: appointment.customer,
-      }));
-    
+      where: { business: { id: businessId }, status: { id: In([1, 2]) } },
+      relations: ['business', 'status', 'customer'],
+    });
+
+    return appointments.map((appointment) => ({
+      id: appointment.id,
+      service: appointment.service,
+      date: appointment.date,
+      dateEnd: appointment.dateEnd,
+      status: appointment.status,
+      business: appointment.business,
+      customer: appointment.customer,
+    }));
+  }
+
+  async getById(appointmentId: number): Promise<Appointment> {
+    console.log(appointmentId);
+    const appointment = await this.findOne({
+      where: { id: appointmentId },
+      relations: ['customer'],
+    });
+
+    return appointment;
   }
 }
