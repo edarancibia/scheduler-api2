@@ -13,6 +13,7 @@ import { StatusModule } from './status/status.module';
 import { BusinessServiceModule } from './business-service/business-service.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MailModule } from './mail/mail.module';
+import { CommonModule } from './common/common.module';
 
 
 @Module({
@@ -35,7 +36,8 @@ import { MailModule } from './mail/mail.module';
     StatusModule,
     BusinessServiceModule,
     ScheduleModule.forRoot(),
-    MailModule
+    MailModule,
+    CommonModule
   ],
   controllers: [AppController],
   providers: [AppService],

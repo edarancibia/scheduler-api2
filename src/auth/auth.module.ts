@@ -12,7 +12,7 @@ import { User } from '../user/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import UserInvitation from '../user/userInvitation.entity';
 import { Business } from '../business/business.entity';
-import { MailService } from '../mail/mail.service';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [
@@ -28,8 +28,9 @@ import { MailService } from '../mail/mail.service';
     }),
     TypeOrmModule.forFeature([User, UserInvitation, Business]),
     ConfigModule,
+    MailModule,
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, UserService, MailService],
+  providers: [AuthService, LocalStrategy, JwtStrategy, UserService],
   controllers: [AuthController],
 })
 export class AuthModule {}

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from './customer.entity';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import CreateCustomerDto from './createCustomer.dto';
 import { Business } from '../business/business.entity';
 import CustomerRepository from './customer.repository';
@@ -10,11 +10,11 @@ import CustomerRepository from './customer.repository';
 export default class CustomerService {
   constructor(
     @InjectRepository(Customer)
-    private readonly customerRepository: Repository<Customer>,
-    private readonly repo: CustomerRepository,
+    private readonly repository: Repository<Customer>,
+    private readonly customerRepository: CustomerRepository,
     @InjectRepository(Business)
     private readonly businessRepository: Repository<Business>,
-  ) {}
+  ) { }
 
   async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
     try {
@@ -22,12 +22,12 @@ export default class CustomerService {
         where: { id: createCustomerDto.businessId },
       });
 
-      const customer = await this.customerRepository.create({
+      const customer = await this.repository.create({
         ...createCustomerDto,
         business,
       });
 
-      return await this.customerRepository.save(customer);
+      return await this.repository.save(customer);
     } catch (error) {
       throw error;
     }
@@ -35,13 +35,18 @@ export default class CustomerService {
 
   async findById(idCustomer: number): Promise<Customer> {
     try {
-      return this.customerRepository.findOne({ where: { id: idCustomer } });
+      return this.repository.findOne({ where: { id: idCustomer } });
     } catch (error) {
       throw error;
     }
   }
 
   async search(businessId: number, query: string): Promise<Customer[]> {
-    return await this.repo.searchByBusinessIdAndName(businessId, query);
+    return await this.customerRepository.searchByBusinessIdAndName(businessId, query);
+  }
+
+  async findByBusinessAndNotEmptyEmail(businessId: number): Promise<Customer[]> {
+    return await this.repository.find({ where: { business: { id: businessId }, email: Not(IsNull()) } })
+      .then(customers => customers.filter(c => c.email.trim() !== ''));
   }
 }

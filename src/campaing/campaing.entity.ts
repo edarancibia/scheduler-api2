@@ -6,7 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Business } from 'src/business/business.entity';
+import { Business } from '../business/business.entity';
 
 @Entity({ name: 'campaigns' })
 export class Campaign {
@@ -17,10 +17,10 @@ export class Campaign {
   business: Business;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
-  title: string;
+  description: string;
 
   @Column({ type: 'text', nullable: false })
-  content: string;
+  imageUrl: string;
 
   @Column({ type: 'timestamp', nullable: true })
   sentAt: Date;
