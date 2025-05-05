@@ -3,4 +3,5 @@ export default interface UserUiDataInterface {
     fullName: string;
     businessId: number;
     businessName: string;
+    createdAt: string;
 }

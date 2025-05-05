@@ -61,6 +61,7 @@ export default class UserService {
       fullName: `${user.name} ${user.lastname}`,
       businessId: business.id,
       businessName: business.name,
+      createdAt: user.createdAt.toString(),
     };
 
     return userData;

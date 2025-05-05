@@ -12,25 +12,40 @@ export class CampaignCronService {
         private readonly mailService: MailService,
     ) { }
 
-    scheduleExecutionForUser(businessId: string, hour: number, minute: number, emailsData: CampaingMailData): void {
+    scheduleExecutionForUser(businessId: string, executionDate: string, hour: number, minute: number, emailsData: CampaingMailData): void {
         if (this.userTimeouts.has(businessId)) {
             clearTimeout(this.userTimeouts.get(businessId));
             this.logger.log(`Previous task for user ${businessId} cleared.`);
         }
 
+        const [day, month, year] = executionDate.split('/').map(Number);
+        const scheduledTime = new Date(year, month - 1, day, hour, minute, 0, 0);
+
+        scheduledTime.setHours(hour, minute, 0, 0);
+
         const now = new Date();
-        const scheduledTime = new Date();
+
+        if (isNaN(scheduledTime.getTime())) {
+            this.logger.error(`Invalid execution date provided: ${executionDate}`);
+            return;
+          }
+
+        if (scheduledTime <= now) {
+            this.logger.warn(`Scheduled time for user ${businessId} is in the past. Aborting.`);
+            return;
+        }
+
+        const delay = scheduledTime.getTime() - now.getTime();
         scheduledTime.setHours(hour, minute, 0, 0);
 
         if (scheduledTime <= now) {
             scheduledTime.setDate(scheduledTime.getDate() + 1);
         }
 
-        const delay = scheduledTime.getTime() - now.getTime();
-
         const timeout = setTimeout(() => {
             this.logger.log(`Executing scheduled task for user ${businessId}...`);
             this.handleExecution(businessId, emailsData);
+            //enviar mail de confirmacion al business al terminar la tarea
         }, delay);
 
         this.userTimeouts.set(businessId, timeout);

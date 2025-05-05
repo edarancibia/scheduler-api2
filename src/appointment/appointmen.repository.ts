@@ -33,7 +33,6 @@ export default class AppointmentRepository extends Repository<Appointment> {
   }
 
   async getById(appointmentId: number): Promise<Appointment> {
-    console.log(appointmentId);
     const appointment = await this.findOne({
       where: { id: appointmentId },
       relations: ['customer'],

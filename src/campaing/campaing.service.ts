@@ -34,7 +34,7 @@ export default class CampaingService {
 
         const emailsData = await this.handlePromoEmailData(createdCampaign.id, data.businessId)
 
-        this.campaignCronService.scheduleExecutionForUser(data.businessId.toString(), parseInt(data.hour), parseInt(data.minute), emailsData);
+        this.campaignCronService.scheduleExecutionForUser(data.businessId.toString(), data.executionDate.toString(), parseInt(data.hour), parseInt(data.minute), emailsData);
 
         return createdCampaign;
 
