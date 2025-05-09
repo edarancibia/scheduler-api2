@@ -14,6 +14,7 @@ import { BusinessServiceModule } from './business-service/business-service.modul
 import { ScheduleModule } from '@nestjs/schedule';
 import { MailModule } from './mail/mail.module';
 import { CommonModule } from './common/common.module';
+import { HealthController } from './health.controller';
 
 
 @Module({
@@ -39,7 +40,7 @@ import { CommonModule } from './common/common.module';
     MailModule,
     CommonModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, HealthController],
   providers: [AppService],
 })
 export class AppModule {}

@@ -20,6 +20,12 @@ export class AuthController {
     return this.userService.passwordRecovery(body.email, body.password);
   }
 
+  @Post('reset-password')
+  async resetPassword(@Body() body: { token: string; newPassword: string }) {
+    await this.authService.resetPassword(body.token, body.newPassword);
+    return { message: 'Contraseña actualizada correctamente.' };
+  }
+
   @Post('forgot-password')
   async forgotPassword(@Body('email') email: string) {
     await this.authService.sendPasswordReset(email);
